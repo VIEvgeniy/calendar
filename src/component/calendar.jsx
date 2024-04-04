@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 const Calendar = ({date}) => {
     const dayName = [
         {name: "Понедельник", short_name: "Пн"},
@@ -27,10 +29,11 @@ const Calendar = ({date}) => {
         for(let j=0;j<7;j++){
             week.push( {
                 day: firstDate.getDate(), 
-                overMount: (firstDate.getMonth() != date.getMonth())
+                overMount: (firstDate.getMonth() != date.getMonth()),
+                curDate: Number(firstDate) == Number(date)
                 })
                 firstDate.setDate(firstDate.getDate() + 1);
-        };
+        }
         dateWeekArray.push(week);
     }
     return (
@@ -59,14 +62,21 @@ const Calendar = ({date}) => {
             <col className="ui-datepicker-week-end"></col>
             </colgroup>
             <thead>
-            <tr>{dayName.map(day => <th scope="col" title={day.name}>{day.short_name}</th>)}</tr>
+            <tr>{dayName.map(curDay => <th scope="col" title={curDay.name}>{curDay.short_name}</th>)}</tr>
             </thead>
             <tbody>
-            {dateWeekArray.map(curWeek => (<tr>{curWeek.map(curDay => (curDay.overMount ? <td className="ui-datepicker-other-month">{curDay.day}</td>:<td>{curDay.day}</td>))}</tr>))}
+            {dateWeekArray.map(curWeek => (<tr>{curWeek.map(curDay => (
+                curDay.overMount ? <td className="ui-datepicker-other-month">{curDay.day}</td>
+                : curDay.curDate ? <td className="ui-datepicker-today">{curDay.day}</td>
+                : <td>{curDay.day}</td>
+                ))}</tr>))}
             </tbody>
         </table>
         </div>
     )
     }
 
+    Calendar.propTypes = {
+        date: PropTypes.instanceOf(Date)
+    }
 export default Calendar
