@@ -62,13 +62,13 @@ const Calendar = ({date}) => {
             <col className="ui-datepicker-week-end"></col>
             </colgroup>
             <thead>
-            <tr>{dayName.map(curDay => <th scope="col" title={curDay.name}>{curDay.short_name}</th>)}</tr>
+            <tr>{dayName.map((curDayName, index) => <th key={index} scope="col" title={curDayName.name}>{curDayName.short_name}</th>)}</tr>
             </thead>
             <tbody>
-            {dateWeekArray.map(curWeek => (<tr>{curWeek.map(curDay => (
-                curDay.overMount ? <td className="ui-datepicker-other-month">{curDay.day}</td>
-                : curDay.curDate ? <td className="ui-datepicker-today">{curDay.day}</td>
-                : <td>{curDay.day}</td>
+            {dateWeekArray.map((curWeek, index) => (<tr key={index}>{curWeek.map((curDay, index) => (
+                curDay.overMount ? <td key={index} className="ui-datepicker-other-month">{curDay.day}</td>
+                : curDay.curDate ? <td key={index} className="ui-datepicker-today">{curDay.day}</td>
+                : <td key={index}>{curDay.day}</td>
                 ))}</tr>))}
             </tbody>
         </table>
