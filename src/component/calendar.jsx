@@ -34,7 +34,8 @@ const Calendar = ({date}) => {
                 })
                 firstDate.setDate(firstDate.getDate() + 1);
         }
-        dateWeekArray.push(week);
+        // Если последняя неделя целиком из дней другово месяца то не добавлять её
+        if (!((week[0].overMount)&&(i==5))) dateWeekArray.push(week);
     }
     return (
         <div className="ui-datepicker">
